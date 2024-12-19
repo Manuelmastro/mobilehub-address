@@ -1,0 +1,81 @@
+syntax = "proto3";
+
+package address;
+
+option go_package = "./pkg/pb";
+
+// The Address service definition
+service AddressService {
+    // Add a new address
+    rpc AddAddress(AddAddressRequest) returns (AddAddressResponse);
+    
+    // List all addresses for a user
+    rpc ListAddresses(ListAddressesRequest) returns (ListAddressesResponse);
+
+    // Delete an address by ID
+    rpc DeleteAddress(DeleteAddressRequest) returns (DeleteAddressResponse);
+
+    // Edit an existing address
+    rpc EditAddress(EditAddressRequest) returns (EditAddressResponse);
+
+    // Get a specific address by ID
+    rpc GetAddress(GetAddressRequest) returns (GetAddressResponse);
+}
+
+// Address data structure
+message Address {
+    string id = 1;           // Unique ID for the address
+    string user_id = 2;      // ID of the user who owns the address
+    string country = 3;
+    string state = 4;
+    string district = 5;
+    string street_name = 6;
+    string pin_code = 7;
+    string phone = 8;
+}
+
+// Request and Response for AddAddress
+message AddAddressRequest {
+    Address address = 1;
+}
+
+message AddAddressResponse {
+    string id = 1;           // ID of the newly created address
+    string message = 2;      // Success message
+}
+
+// Request and Response for ListAddresses
+message ListAddressesRequest {
+    string user_id = 1;      // User ID to list addresses for
+}
+
+message ListAddressesResponse {
+    repeated Address addresses = 1;
+}
+
+// Request and Response for DeleteAddress
+message DeleteAddressRequest {
+    string id = 1;           // ID of the address to delete
+}
+
+message DeleteAddressResponse {
+    string message = 1;      // Success or failure message
+}
+
+// Request and Response for EditAddress
+message EditAddressRequest {
+    Address address = 1;     // The updated address information
+}
+
+message EditAddressResponse {
+    string message = 1;      // Success or failure message
+}
+
+// Request and Response for GetAddress
+message GetAddressRequest {
+    string id = 1;           // ID of the address to retrieve
+}
+
+message GetAddressResponse {
+    Address address = 1;     // The retrieved address
+}
